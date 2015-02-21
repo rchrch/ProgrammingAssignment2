@@ -2,6 +2,7 @@
 # allows for caching the inverse matrix solution after the first time it
 # is solved.
 
+
 # Cachable matrix solver factory function.  It takes an (optional)
 # initial matrix and returns an object that has getter and setter functions
 # for the original matrix and the inverse matrix.
@@ -12,7 +13,7 @@ makeCacheMatrix <- function(x = matrix()) {
     # Define functions to set and get the original matrix
     set <- function(new_matrix) {
         x <<- new_matrix
-        cachedInvMatrix <<- NULL          # Reset cached value
+        cachedInvMatrix <<- NULL          # Clear cached value
     }
     get <- function() x
 
@@ -22,7 +23,8 @@ makeCacheMatrix <- function(x = matrix()) {
     # function are changed.
     getInverse <- function(reval=FALSE, ...) {
         if (is.null(cachedInvMatrix) || reval) {
-            # Cached matrix not yet calculated (or caller requested a - do it now
+            # Cached matrix not yet calculated (do it now)
+            #message('Solving matrix')
             cachedInvMatrix <<- solve(x, ...)
         }
         cachedInvMatrix
@@ -39,7 +41,7 @@ makeCacheMatrix <- function(x = matrix()) {
 # has not been calculated, then the calculation is made and set for the object.
 cacheSolve <- function(x, ...) {
     ## Return a matrix that is the inverse of 'x'
-    x$getInverse()
+    x$getInverse(...)
 }
 
 
